@@ -59,4 +59,6 @@ class DatabaseHelper {
       );
     });
   }
+
+  //TODO: Method to remove Task from the database.
 }

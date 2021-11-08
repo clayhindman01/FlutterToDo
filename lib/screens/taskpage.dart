@@ -18,6 +18,7 @@ class _TaskpageState extends State<Taskpage> {
   String? _task_title = "";
   int? _taskId = 0;
   DatabaseHelper _dbHelper = DatabaseHelper();
+  final fieldText = TextEditingController();
 
   @override
   void initState() {
@@ -27,6 +28,10 @@ class _TaskpageState extends State<Taskpage> {
     }
 
     super.initState();
+  }
+
+  void clearText() {
+    fieldText.clear();
   }
 
   @override
@@ -91,6 +96,7 @@ class _TaskpageState extends State<Taskpage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 12.0),
                     child: TextField(
+                      controller: TextEditingController()..clear(),
                       decoration: InputDecoration(
                         hintText: "Todo",
                         border: InputBorder.none,
@@ -156,7 +162,7 @@ class _TaskpageState extends State<Taskpage> {
                                     isDone: 0,
                                   );
                                   await _dbHelper.insertTodo(_newTodo);
-                                  print("adding new todo");
+                                  clearText();
                                   setState(() {});
                                 }
                               }
@@ -165,6 +171,7 @@ class _TaskpageState extends State<Taskpage> {
                               hintText: "Enter To Do Item...",
                               border: InputBorder.none,
                             ),
+                            controller: fieldText,
                           ),
                         ),
                       ],

@@ -18,7 +18,7 @@ class TaskCardWidget extends StatelessWidget {
         bottom: 20.0,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(3.0),
+        borderRadius: BorderRadius.circular(15.0),
         color: Color(0xffFFF59B),
         border: Border.all(width: 1.0, color: Color(0xFFacacac)),
       ),
@@ -36,6 +36,7 @@ class TaskCardWidget extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(
                 top: 15.0,
+                bottom: 15.0,
               ),
               child: Text(
                 desc ?? "No Description Added",
