@@ -12,10 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.nunitoSansTextTheme(
+        textTheme: GoogleFonts.mavenProTextTheme(
+          //textTheme: GoogleFonts.nunitoSansTextTheme(
           Theme.of(context).textTheme,
         ),
-      ), 
+      ),
       home: HomePage(),
     );
   }

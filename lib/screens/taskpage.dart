@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/widgets.dart';
+import 'package:todo/database_helper.dart';
+import 'package:todo/widgets.dart';
+import 'package:todo/models/task.dart';
 
 class Taskpage extends StatefulWidget {
   @override
@@ -29,16 +31,23 @@ class _TaskpageState extends State<Taskpage> {
                             Navigator.pop(context);
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: EdgeInsets.all(24.0),
                             child: Image(
                               image: AssetImage(
-                                'assets/images/back_arrow_icon.png'
-                              ),
+                                  'assets/images/back_arrow_icon.png'),
                             ),
                           ),
                         ),
                         Expanded(
                           child: TextField(
+                            onSubmitted: (value) async {
+                              if (value != "") {
+                                DatabaseHelper _dbHelper = DatabaseHelper();
+                                Task _newTask = Task(title: value);
+                                await _dbHelper.insertTask(_newTask);
+                              }
+                              print("New task has been created");
+                            },
                             decoration: InputDecoration(
                               hintText: "Enter Subject",
                               border: InputBorder.none,
@@ -87,9 +96,7 @@ class _TaskpageState extends State<Taskpage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => Taskpage()
-                      ),
+                      MaterialPageRoute(builder: (context) => Taskpage()),
                     );
                   },
                   child: Container(
