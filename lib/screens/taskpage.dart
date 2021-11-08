@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:todo/database_helper.dart';
+import 'package:todo/models/todo.dart';
 import 'package:todo/widgets.dart';
 import 'package:todo/models/task.dart';
+import 'package:todo/models/todo.dart';
 
 class Taskpage extends StatefulWidget {
+  final Task? task;
+
+  Taskpage({this.task});
+
   @override
   _TaskpageState createState() => _TaskpageState();
 }
 
 class _TaskpageState extends State<Taskpage> {
+  String? _task_title = "";
+  int? _taskId = 0;
+  DatabaseHelper _dbHelper = DatabaseHelper();
+
+  @override
+  void initState() {
+    if (widget.task != null) {
+      _task_title = widget.task!.title;
+      _taskId = widget.task!.id;
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +61,19 @@ class _TaskpageState extends State<Taskpage> {
                         Expanded(
                           child: TextField(
                             onSubmitted: (value) async {
+                              //Check if field is not empty
                               if (value != "") {
-                                DatabaseHelper _dbHelper = DatabaseHelper();
-                                Task _newTask = Task(title: value);
-                                await _dbHelper.insertTask(_newTask);
+                                //Check if task is null
+                                if (widget.task == null) {
+                                  Task _newTask = Task(title: value);
+                                  await _dbHelper.insertTask(_newTask);
+                                } else {
+                                  print("Update the existing task");
+                                }
                               }
-                              print("New task has been created");
                             },
+                            controller: TextEditingController()
+                              ..text = _task_title.toString(),
                             decoration: InputDecoration(
                               hintText: "Enter Subject",
                               border: InputBorder.none,
@@ -74,19 +100,76 @@ class _TaskpageState extends State<Taskpage> {
                       ),
                     ),
                   ),
-                  TodoWidget(
-                    text: "Take out trash",
-                    isDone: true,
-                  ),
-                  TodoWidget(
-                    isDone: true,
-                  ),
-                  TodoWidget(
-                    isDone: false,
-                  ),
-                  TodoWidget(
-                    isDone: false,
-                  ),
+                  FutureBuilder(
+                      initialData: [],
+                      future: _dbHelper.getTodos(_taskId),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {},
+                                child: TodoWidget(
+                                  text: snapshot.data[index].title,
+                                  isDone: snapshot.data[index].isDone == 0
+                                      ? false
+                                      : true,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 20.0,
+                          height: 20.0,
+                          margin: EdgeInsets.only(
+                            right: 10.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(6.0),
+                            border: Border.all(
+                                width: 1.0, color: Color(0xFFacacac)),
+                          ),
+                          child: Container(
+                            child: Image(
+                              image: AssetImage("assets/images/check_icon.png"),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            onSubmitted: (value) async {
+                              if (value != "") {
+                                if (widget.task != null) {
+                                  Todo _newTodo = Todo(
+                                    taskId: widget.task!.id,
+                                    title: value,
+                                    isDone: 0,
+                                  );
+                                  await _dbHelper.insertTodo(_newTodo);
+                                  print("adding new todo");
+                                  setState(() {});
+                                }
+                              }
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Enter To Do Item...",
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
               Positioned(
@@ -96,7 +179,8 @@ class _TaskpageState extends State<Taskpage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Taskpage()),
+                      MaterialPageRoute(
+                          builder: (context) => Taskpage(task: null)),
                     );
                   },
                   child: Container(
