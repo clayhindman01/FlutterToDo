@@ -11,8 +11,8 @@ class TaskCardWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        vertical: 26.0,
-        horizontal: 24.0, 
+        vertical: 40.0,
+        horizontal: 24.0,
       ),
       margin: EdgeInsets.only(
         bottom: 20.0,
@@ -34,18 +34,17 @@ class TaskCardWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              top: 10.0,
-            ),
-            child: Text(
-              desc ?? "No Description Added",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Color(0xFF868290),
-                height: 1.5,
+              padding: EdgeInsets.only(
+                top: 15.0,
               ),
-            )
-          ),
+              child: Text(
+                desc ?? "No Description Added",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Color(0xFF868290),
+                  height: 1.5,
+                ),
+              )),
         ],
       ),
     );
@@ -74,15 +73,15 @@ class TodoWidget extends StatelessWidget {
               right: 10.0,
             ),
             decoration: BoxDecoration(
-              color: isDone ?  Color(0xFF14FF34) : Colors.transparent,
+              color: isDone ? Color(0xFF14FF34) : Colors.transparent,
               borderRadius: BorderRadius.circular(6.0),
-              border: isDone? null : Border.all(width: 1.0, color: Color(0xFFacacac)),
+              border: isDone
+                  ? null
+                  : Border.all(width: 1.0, color: Color(0xFFacacac)),
             ),
             child: Container(
               child: Image(
-                image: AssetImage(
-                  "assets/images/check_icon.png"
-                ),
+                image: AssetImage("assets/images/check_icon.png"),
               ),
             ),
           ),
@@ -91,8 +90,9 @@ class TodoWidget extends StatelessWidget {
             style: TextStyle(
               color: isDone ? Color(0xFF86829D) : Color(0xFF211551),
               fontSize: 14.0,
-              fontWeight: isDone? FontWeight.w500: FontWeight.w700,
-              decoration: isDone ? TextDecoration.lineThrough: TextDecoration.none,
+              fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
+              decoration:
+                  isDone ? TextDecoration.lineThrough : TextDecoration.none,
             ),
           ),
         ],
@@ -104,11 +104,7 @@ class TodoWidget extends StatelessWidget {
 class NoBehavior extends ScrollBehavior {
   @override
   Widget buildViewportChrome(
-    BuildContext context,
-    Widget child,
-    AxisDirection axisDirection
-  ) {
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
-
 }

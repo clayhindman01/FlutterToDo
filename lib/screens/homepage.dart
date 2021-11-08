@@ -31,13 +31,13 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(
-                      bottom: 30.0,
+                      bottom: 60.0,
                     ),
                     child: const Text(
                       "To\nDo.",
                       style: TextStyle(
-                        fontSize: 40.0,
-                        letterSpacing: 2.0,
+                        fontSize: 50.0,
+                        letterSpacing: 2.5,
                       ),
                     ),
                   ),
