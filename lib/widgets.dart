@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:todo/database_helper.dart';
 
 class TaskCardWidget extends StatelessWidget {
   final String? title;
   final String? desc;
+  final int? taskId;
 
-  TaskCardWidget({this.title, this.desc});
+  TaskCardWidget({this.title, this.desc, this.taskId});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,6 @@ class TaskCardWidget extends StatelessWidget {
                   height: 1.5,
                 ),
               )),
-          //TODO: Add the todos to the widget.
         ],
       ),
     );

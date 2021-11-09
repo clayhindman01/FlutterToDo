@@ -220,7 +220,7 @@ class _TaskpageState extends State<Taskpage> {
                               focusNode: _todoFocus,
                               onSubmitted: (value) async {
                                 if (value != "") {
-                                  if (_taskId != null) {
+                                  if (_taskId != 0) {
                                     Todo _newTodo = Todo(
                                       taskId: _taskId,
                                       title: value,
