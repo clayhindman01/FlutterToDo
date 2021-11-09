@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(
             horizontal: 30.0,
-            vertical: 46.0,
+            vertical: 50.0,
           ),
           color: Color(0xFFFFFFd),
           child: Stack(
@@ -56,11 +56,15 @@ class _HomePageState extends State<HomePage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => Taskpage(
-                                              task: snapshot.data[index])),
-                                    );
+                                                task: snapshot.data[index],
+                                              )),
+                                    ).then((value) {
+                                      setState(() {});
+                                    });
                                   },
                                   child: TaskCardWidget(
                                     title: snapshot.data[index].title,
+                                    desc: snapshot.data[index].description,
                                   ),
                                 );
                               }),

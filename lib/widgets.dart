@@ -18,7 +18,7 @@ class TaskCardWidget extends StatelessWidget {
         bottom: 20.0,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(2.0),
         color: Color(0xffFFF59B),
         border: Border.all(width: 1.0, color: Color(0xFFacacac)),
       ),
@@ -46,6 +46,7 @@ class TaskCardWidget extends StatelessWidget {
                   height: 1.5,
                 ),
               )),
+          //TODO: Add the todos to the widget.
         ],
       ),
     );
@@ -74,7 +75,7 @@ class TodoWidget extends StatelessWidget {
               right: 10.0,
             ),
             decoration: BoxDecoration(
-              color: isDone ? Color(0xFF14FF34) : Colors.transparent,
+              color: isDone ? Color(0xFF2DF849) : Colors.transparent,
               borderRadius: BorderRadius.circular(6.0),
               border: isDone
                   ? null
@@ -86,14 +87,16 @@ class TodoWidget extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            text ?? "(Unnamed To Do)",
-            style: TextStyle(
-              color: isDone ? Color(0xFF86829D) : Color(0xFF211551),
-              fontSize: 14.0,
-              fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
-              decoration:
-                  isDone ? TextDecoration.lineThrough : TextDecoration.none,
+          Flexible(
+            child: Text(
+              text ?? "(Unnamed To Do)",
+              style: TextStyle(
+                color: isDone ? Color(0xFF86829D) : Color(0xFF211551),
+                fontSize: 14.0,
+                fontWeight: isDone ? FontWeight.w500 : FontWeight.w700,
+                decoration:
+                    isDone ? TextDecoration.lineThrough : TextDecoration.none,
+              ),
             ),
           ),
         ],

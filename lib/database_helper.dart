@@ -19,10 +19,35 @@ class DatabaseHelper {
   }
 
   //Inserts tasks into the database
-  Future<void> insertTask(Task task) async {
+  Future<int?> insertTask(Task task) async {
+    int? taskId = 0;
+
     Database _db = await database();
-    await _db.insert('tasks', task.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await _db
+        .insert('tasks', task.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace)
+        .then((value) {
+      taskId = value;
+    });
+    return taskId;
+  }
+
+  //Update the title of an existing task
+  Future<void> updateTaskTitle(int? id, String title) async {
+    Database _db = await database();
+    await _db.rawUpdate("UPDATE tasks SET title = '$title' WHERE id = '$id'");
+  }
+
+  //Update the description of a task
+  Future<void> updateTaskDescription(int? id, String description) async {
+    Database _db = await database();
+    await _db.rawUpdate(
+        "UPDATE tasks SET description = '$description' WHERE id = '$id'");
+  }
+
+  Future<void> updateIsDone(int? id, int? isDone) async {
+    Database _db = await database();
+    await _db.rawUpdate("UPDATE todos SET isDone = '$isDone' WHERE id = '$id'");
   }
 
   //Inserts todos into the database
@@ -58,6 +83,12 @@ class DatabaseHelper {
         isDone: todoMap[index]["isDone"],
       );
     });
+  }
+
+  Future<void> removeTask(int? taskId) async {
+    Database _db = await database();
+    await _db.rawDelete("DELETE FROM tasks WHERE id = '$taskId'");
+    await _db.rawDelete("DELETE FROM todos WHERE taskId = '$taskId'");
   }
 
   //TODO: Method to remove Task from the database.
