@@ -20,6 +20,4 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
     );
   }
-
-  //TODO: Fix creating a new task when the title is changed when created for the first time.
 }

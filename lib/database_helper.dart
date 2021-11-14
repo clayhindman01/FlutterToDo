@@ -91,5 +91,10 @@ class DatabaseHelper {
     await _db.rawDelete("DELETE FROM todos WHERE taskId = '$taskId'");
   }
 
+  Future<void> removeTodo(int? id) async {
+    Database _db = await database();
+    await _db.rawDelete("DELETE FROM todos WHERE id = '$id'");
+  }
+
   //TODO: Method to remove Task from the database.
 }

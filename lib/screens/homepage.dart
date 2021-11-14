@@ -10,6 +10,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+bool? taskIsEmpty(taskId) {
+  bool isEmpty = true;
+  if (taskId != null) {
+    isEmpty = false;
+  }
+}
+
 class _HomePageState extends State<HomePage> {
   DatabaseHelper _dbHelper = DatabaseHelper();
 

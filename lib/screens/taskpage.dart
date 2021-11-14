@@ -6,7 +6,7 @@ import 'package:todo/models/task.dart';
 import 'package:todo/models/todo.dart';
 
 class Taskpage extends StatefulWidget {
-  final Task? task;
+  Task? task;
 
   Taskpage({this.task});
 
@@ -98,6 +98,7 @@ class _TaskpageState extends State<Taskpage> {
                                   Task _newTask = Task(title: value);
                                   _taskId =
                                       await _dbHelper.insertTask(_newTask);
+                                  widget.task = _newTask;
                                   setState(() {
                                     _contentVisible = true;
                                     _task_title = value;
@@ -133,10 +134,12 @@ class _TaskpageState extends State<Taskpage> {
                       padding: EdgeInsets.only(bottom: 12.0),
                       child: TextField(
                         focusNode: _descriptionFocus,
-                        onSubmitted: (value) {
+                        onSubmitted: (value) async {
                           if (value != '') {
                             if (_taskId != null) {
-                              _dbHelper.updateTaskDescription(_taskId, value);
+                              await _dbHelper.updateTaskDescription(
+                                  _taskId, value);
+                              _taskDescription = value;
                             }
                           }
                           _todoFocus!.requestFocus();
